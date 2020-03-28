@@ -24,18 +24,16 @@ export default function Incidents() {
         if (loading) {
             return;
         }
-
         if (total > 0 && incidents.length === total) {
             return;
         }
 
         setLoading(true);
-
         const response = await api.get('incidents', {
             params: { page }
         });
 
-        setIncidents(...incidents, ...response.data);
+        setIncidents([...incidents, ...response.data]);
         setTotal(response.headers['x-total-count']);
         setPage(page + 1);
         setLoading(false);
@@ -44,7 +42,6 @@ export default function Incidents() {
     useEffect(() => {
         loadIncidents();
     }, []);
-
 
     return (
         <View style={styles.container}>
